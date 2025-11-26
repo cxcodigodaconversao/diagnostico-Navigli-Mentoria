@@ -812,7 +812,7 @@
                     <div class="score-level" id="scoreLevel">Calculando...</div>
                     <div class="score-message" id="scoreMessage"></div>
                     <div class="benchmark-note">
-                        <strong>Referência:</strong> A média aceitável para cada pilar é de <strong>75%</strong> (nota 7,5). Pilares abaixo disso precisam de atenção prioritária.
+                        <strong>Referência:</strong> Notas de <strong>7-8</strong> indicam boa estruturação. Notas <strong>9-10</strong> representam excelência. Pilares abaixo de 7 precisam de atenção prioritária.
                     </div>
                 </div>
             </div>
@@ -955,70 +955,73 @@
         function getTopicFeedback(topicName, percentage) {
             const feedbacks = {
                 'administrativo': {
-                    excellent: "🏆 Excelente gestão financeira! Seus controles permitem decisões estratégicas precisas. Continue refinando análises e projeções.",
-                    good: "📊 Boa base financeira! Para evoluir, implemente DRE detalhado e análise de margens por tipo de projeto.",
-                    warning: "⚠️ Gestão financeira precisa de atenção. Priorize controle de fluxo de caixa e análise de custos fixos vs variáveis.",
-                    critical: "🚨 Área crítica! Estabeleça controles básicos urgentemente: fluxo de caixa, margens e DRE mensal. Isso é sobrevivência."
+                    excellent: "Gestão financeira robusta, com DRE e margens monitoradas. Porém, para escalar faturamento sem pressão no caixa, precisa evoluir para previsões mais refinadas, análises de risco e tomada de decisão estratégica.",
+                    good: "Boa base financeira e indicadores mais claros. Controles estão presentes, mas ainda sem profundidade estratégica. Para crescer com segurança, precisa direcionamento, padronização e refinamento técnico.",
+                    warning: "Controles básicos existem, porém rasos. Falta DRE completo, análise de margens por tipo de projeto e rotina financeira consistente. A operação funciona, mas sem segurança.",
+                    critical: "Caixa desorganizado, ausência de controles e nenhuma visão real de margens ou lucratividade. A operação corre alto risco financeiro e decisório."
                 },
                 'produto': {
-                    excellent: "🏆 Mix de produtos e showroom excepcionais! Continue investindo em experiência e diferenciação.",
-                    good: "🪑 Bom posicionamento de produto! Avalie expandir mix e melhorar experiência do showroom.",
-                    warning: "⚠️ Produto precisa de evolução. Revise parceiros fabricantes e invista no showroom como ferramenta de vendas.",
-                    critical: "🚨 Produto em situação crítica! Reavalie posicionamento, qualidade e experiência do cliente no showroom."
+                    excellent: "Produto de alto nível, showroom forte e percepção premium. O próximo passo é evoluir experiência, narrativa de valor e consistência de apresentação para capturar tickets maiores e reduzir comparações com concorrentes.",
+                    good: "Bom mix, estética alinhada e showroom que gera valor. Porém, ainda há espaço para elevar a percepção premium, fortalecer diferenciação e ajustar narrativa comercial.",
+                    warning: "Produto razoável e apresentação funcional, porém sem força comercial. Mix limitado e showroom pouco estratégico.",
+                    critical: "Portfólio fraco, baixa qualidade percebida e showroom pobre. Marca sem diferenciação e vulnerável à concorrência."
                 },
                 'projeto': {
-                    excellent: "🏆 Projetos de alta qualidade! Sua entrega técnica e criativa é diferencial competitivo.",
-                    good: "✏️ Bons projetos! Foque em reduzir retrabalhos e acelerar entregas mantendo qualidade.",
-                    warning: "⚠️ Projetos precisam de padronização. Crie processos para reduzir alterações e melhorar renderização.",
-                    critical: "🚨 Setor de projetos crítico! Estabeleça padrões de qualidade e processos de aprovação urgentemente."
+                    excellent: "Projetos rápidos, comerciais e tecnicamente sólidos. Para atingir alta conversão e escala, é necessário evoluir narrativa de apresentação, sintaxe estratégica e consistência nas entregas.",
+                    good: "Projetos bem desenvolvidos, com boa estética e técnica. Retrabalhos diminuem, mas ainda há gargalos na comunicação e na previsibilidade de entrega.",
+                    warning: "Projetos visualmente bons, mas irregulares no método. Retrabalhos ainda relevantes e tempo de entrega instável. Falta processo claro.",
+                    critical: "Projetos inconsistentes, com retrabalhos e falta de padrão técnico. Entregas lentas e insegurança operacional."
                 },
                 'marketing': {
-                    excellent: "🏆 Marketing excepcional! Sua presença digital e captação são referência no mercado.",
-                    good: "📱 Bom marketing! Intensifique conteúdo no Instagram e otimize captação de leads qualificados.",
-                    warning: "⚠️ Marketing precisa de estratégia. Invista em presença digital consistente e geração de leads.",
-                    critical: "🚨 Marketing crítico! Sem marketing efetivo, vendas dependem apenas de indicações. Estruture urgentemente."
+                    excellent: "Marketing sólido, autoridade forte e geração consistente de leads. O próximo estágio é elevar a estratégia, expandir alcance e fortalecer diferenciação para sustentar aumento de ticket e volume de vendas.",
+                    good: "Boa presença digital e comunicação clara. Estrutura de conteúdo começa a gerar oportunidades, mas ainda sem força de escala e com narrativa fraca para tickets maiores.",
+                    warning: "Presença digital básica e irregular. Leads poucos e pouco qualificados. Falta calendário, autoridade e clareza estratégica.",
+                    critical: "Marketing quase inexistente. Marca não gera demanda, não se posiciona e depende apenas de indicações. Falta estratégia, constância e métricas."
                 },
                 'vendas': {
-                    excellent: "🏆 Equipe comercial de alta performance! Processos de venda estruturados e efetivos.",
-                    good: "💰 Vendas com boa base! Trabalhe follow-up e reduza dependência do dono nas negociações.",
-                    warning: "⚠️ Vendas precisam de estruturação. Treine equipe em argumentação e crie processo de follow-up.",
-                    critical: "🚨 Vendas em situação crítica! Estruture processo comercial, scripts e treinamento urgentemente."
+                    excellent: "Vendas fortes, com equipe preparada e rituais bem executados. Para crescer, precisa elevar o padrão de apresentações, argumentação de valor e previsibilidade de conversão, evitando acomodação no resultado atual.",
+                    good: "Equipe alinhada e processo funcionando. Conversão razoável e apresentações eficientes, mas ainda com brechas grandes na argumentação estratégica e no acompanhamento do lead.",
+                    warning: "Vendas acontecem, porém sem método. Argumentação fraca, baixa previsibilidade e equipe sem rituais. Necessita estrutura imediata.",
+                    critical: "Processo inexistente, equipe despreparada e conversão muito baixa. Falta follow-up e estrutura mínima. Oportunidades se perdem facilmente."
                 },
                 'posvendas': {
-                    excellent: "🏆 Pós-vendas exemplar! Sua experiência de entrega fideliza e gera indicações.",
-                    good: "🤝 Bom pós-vendas! Padronize checklists de entrega e documentação técnica.",
-                    warning: "⚠️ Pós-vendas precisa de processo. Crie fluxo de conferência e resolução de problemas.",
-                    critical: "🚨 Pós-vendas crítico! Cliente insatisfeito não indica. Estruture processo de entrega urgentemente."
+                    excellent: "Pós-venda de alto nível, documentação impecável e resolução rápida. Para elevar resultados, precisa transformar esse setor em diferencial competitivo e alimentar vendas com provas sociais consistentes.",
+                    good: "Pós-venda organizado, boa comunicação e processos funcionando. Porém, ainda com gaps na velocidade de resposta, integração com montagens e experiência final do cliente.",
+                    warning: "Estrutura básica existe, mas sem padrão. Registros incompletos e baixa previsibilidade. Necessário organizar fluxos e documentação.",
+                    critical: "Pós-venda reativo, com problemas recorrentes, comunicação falha e clientes insatisfeitos. Alto risco de desgaste da marca."
                 },
                 'montagens': {
-                    excellent: "🏆 Montagens impecáveis! Qualidade e pontualidade são seu diferencial.",
-                    good: "🔧 Boas montagens! Foque em pontualidade e comunicação com cliente durante a obra.",
-                    warning: "⚠️ Montagens precisam de atenção. Padronize processos de limpeza e checklist de entrega.",
-                    critical: "🚨 Montagens em situação crítica! Problemas na montagem afetam toda a experiência. Estruture urgentemente."
+                    excellent: "Montagens técnicas, limpas e pontuais. Para evoluir ainda mais, é necessário padronizar a experiência premium, integrar com pós-vendas e criar diferenciação percebida pelo cliente.",
+                    good: "Montagens pontuais e com bom nível técnico. Retrabalhos menores e comunicação funcional. Há espaço para elevar documentação, refinamento e experiência final.",
+                    warning: "Montagens acontecem, mas com falhas pontuais, comunicação fraca e falta de padrão. É preciso estruturar processos e alinhar expectativas com cliente.",
+                    critical: "Muitas falhas, atrasos e erros. Cliente inseguro e operação comprometida. Alto índice de retrabalho."
                 }
             };
 
             const feedback = feedbacks[topicName];
             if (!feedback) return "Continue desenvolvendo este pilar!";
 
-            if (percentage >= 75) return feedback.excellent;
-            if (percentage >= 60) return feedback.good;
+            // Faixas baseadas nas notas: 0-3 (0-30%), 4-6 (40-60%), 7-8 (70-80%), 9-10 (90-100%)
+            if (percentage >= 90) return feedback.excellent;
+            if (percentage >= 70) return feedback.good;
             if (percentage >= 40) return feedback.warning;
             return feedback.critical;
         }
 
         function getStatusClass(percentage) {
-            if (percentage >= 75) return 'excellent';
-            if (percentage >= 60) return 'good';
+            // Faixas: 0-3 (0-30%), 4-6 (40-60%), 7-8 (70-80%), 9-10 (90-100%)
+            if (percentage >= 90) return 'excellent';
+            if (percentage >= 70) return 'good';
             if (percentage >= 40) return 'warning';
             return 'critical';
         }
 
         function getStatusText(percentage) {
-            if (percentage >= 75) return '✓ Acima da média';
-            if (percentage >= 60) return '◐ Próximo da média';
-            if (percentage >= 40) return '⚠ Abaixo da média';
-            return '✗ Crítico';
+            // Faixas: 0-3 (0-30%), 4-6 (40-60%), 7-8 (70-80%), 9-10 (90-100%)
+            if (percentage >= 90) return '✓ Excelente (9-10)';
+            if (percentage >= 70) return '◐ Bom (7-8)';
+            if (percentage >= 40) return '⚠ Abaixo da Média (4-6)';
+            return '✗ Crítico (0-3)';
         }
 
         function updateProgress() {
@@ -1146,21 +1149,22 @@
         }
 
         function getScoreLevel(percentage) {
-            if (percentage >= 75) return {
-                level: 'Gestão Estruturada',
-                message: 'Parabéns! Sua loja já opera com boa estruturação. Continue refinando processos e focando nos pilares com maior potencial de melhoria.'
+            // Faixas: 0-3 (0-30%), 4-6 (40-60%), 7-8 (70-80%), 9-10 (90-100%)
+            if (percentage >= 90) return {
+                level: 'Excelente',
+                message: 'Sua loja opera em alto nível! O próximo passo é refinar estratégias, escalar com segurança e transformar cada pilar em diferencial competitivo real.'
             };
-            if (percentage >= 60) return {
-                level: 'Gestão em Desenvolvimento',
-                message: 'Sua loja tem boa base, mas há oportunidades claras de evolução. Foque nos pilares abaixo de 75% para ganhos rápidos.'
+            if (percentage >= 70) return {
+                level: 'Bom - Estruturado',
+                message: 'Boa estrutura estabelecida. Os fundamentos estão presentes, mas ainda há espaço para elevar a operação ao próximo nível com direcionamento estratégico.'
             };
             if (percentage >= 40) return {
-                level: 'Gestão Inicial',
-                message: 'Existem gaps importantes que estão limitando seus resultados. Priorize os pilares críticos para uma transformação real.'
+                level: 'Abaixo da Média',
+                message: 'A operação funciona, mas com gaps relevantes. Há oportunidades claras de melhoria que podem gerar resultados significativos com a estruturação correta.'
             };
             return {
-                level: 'Gestão Crítica',
-                message: 'Sua loja precisa de atenção urgente em diversos pilares. A boa notícia: há muito potencial de crescimento com a estruturação correta.'
+                level: 'Crítico',
+                message: 'Sua loja precisa de atenção urgente em diversos pilares. A boa notícia: há muito potencial de crescimento com a estruturação correta dos fundamentos.'
             };
         }
 
@@ -1171,7 +1175,7 @@
 
             const labels = topics.map(t => t.shortLabel);
             const dataPoints = topics.map(t => results.individual[t.name].average);
-            const idealPoints = new Array(topics.length).fill(7.5);
+            const idealPoints = new Array(topics.length).fill(7);
 
             const isMobile = window.innerWidth <= 768;
 
@@ -1192,7 +1196,7 @@
                             pointRadius: 6
                         },
                         {
-                            label: 'Média Aceitável (75%)',
+                            label: 'Referência Bom (7)',
                             data: idealPoints,
                             borderColor: '#22c55e',
                             backgroundColor: 'rgba(34, 197, 94, 0.05)',
@@ -1280,7 +1284,7 @@
 
             // Check problem areas
             const problemPilars = ['administrativo', 'marketing', 'vendas'];
-            const hasProblemAreas = problemPilars.some(p => results.individual[p].percentage < 75);
+            const hasProblemAreas = problemPilars.some(p => results.individual[p].percentage < 70);
             
             if (hasProblemAreas) {
                 document.getElementById('problemAreas').style.display = 'block';
