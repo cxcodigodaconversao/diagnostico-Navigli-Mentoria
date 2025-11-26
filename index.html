@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Diagnóstico completo para lojas de móveis planejados - Avalie os 7 pilares do seu negócio">
+    <meta name="keywords" content="móveis planejados, diagnóstico, gestão, vendas, marketing, loja">
+    <title>Diagnóstico Estratégico - Móveis Planejados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a1628;
+            --bg-secondary: #111d32;
+            --bg-card: #162236;
+            --gold-primary: #d4a853;
+            --gold-light: #e8c87a;
+            --gold-dark: #b8923e;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0aec0;
+            --text-muted: #6b7a8f;
+            --border-color: rgba(212, 168, 83, 0.2);
+            --shadow-gold: 0 0 40px rgba(212, 168, 83, 0.15);
+            --gradient-gold: linear-gradient(135deg, #d4a853 0%, #e8c87a 50%, #d4a853 100%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(212, 168, 83, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(212, 168, 83, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 50px 20px 40px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .logo-badge::before {
+            content: '◆';
+            font-size: 0.6rem;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .header h1 span {
+            color: var(--gold-primary);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-text strong {
+            color: var(--gold-primary);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 3px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(212, 168, 83, 0.5);
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px 35px;
+            box-shadow: var(--shadow-gold);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+        }
+
+        .question-card.fade-out {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .question-card.fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .topic-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--gold-primary);
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .topic-indicator::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .question-number {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            margin-bottom: 35px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        /* Rating Scale */
+        .rating-container {
+            margin: 30px 0;
+        }
+
+        .rating-scale {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 8px;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .rating-scale input[type="radio"] {
+            display: none;
+        }
+
+        .rating-scale label {
+            aspect-ratio: 1;
+            min-height: 44px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+
+        .rating-scale label:hover {
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 168, 83, 0.2);
+        }
+
+        .rating-scale input[type="radio"]:checked + label {
+            background: var(--gradient-gold);
+            border-color: var(--gold-primary);
+            color: var(--bg-primary);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(212, 168, 83, 0.4);
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            padding: 0 5px;
+        }
+
+        .scale-labels span {
+            max-width: 120px;
+            text-align: center;
+        }
+
+        .scale-labels span:first-child {
+            text-align: left;
+        }
+
+        .scale-labels span:last-child {
+            text-align: right;
+        }
+
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: var(--bg-primary);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 168, 83, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results {
+            display: none;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .results-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .results-header h2 span {
+            color: var(--gold-primary);
+        }
+
+        .score-summary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-gold);
+        }
+
+        .total-score {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .score-level {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold-primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .score-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .benchmark-note {
+            margin-top: 25px;
+            padding: 15px 25px;
+            background: rgba(212, 168, 83, 0.1);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .benchmark-note strong {
+            color: var(--gold-primary);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            max-width: 750px;
+            margin: 50px auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .chart-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+        }
+
+        /* Detailed Results */
+        .detailed-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .result-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-primary);
+            font-weight: 600;
+            font-size: 1.15rem;
+        }
+
+        .result-score {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .result-score small {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .result-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .result-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--gradient-gold);
+        }
+
+        .result-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .result-status.excellent {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .result-status.good {
+            background: rgba(212, 168, 83, 0.15);
+            color: var(--gold-primary);
+        }
+
+        .result-status.warning {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+        }
+
+        .result-status.critical {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .result-feedback {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 15px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border-left: 3px solid var(--gold-primary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin-top: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-gold);
+        }
+
+        .cta-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .cta-section h3 span {
+            color: var(--gold-primary);
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--gradient-gold);
+            color: var(--bg-primary);
+            border: none;
+            padding: 18px 45px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 168, 83, 0.35);
+        }
+
+        .btn-cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--gold-primary);
+            border: 2px solid var(--gold-primary);
+            padding: 16px 40px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .btn-cta-secondary:hover {
+            background: var(--gold-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            border-color: #25D366;
+            color: #fff;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            border-color: #128C7E;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Problem Areas Highlight */
+        .problem-areas {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 40px 0;
+        }
+
+        .problem-areas h4 {
+            color: #ef4444;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .problem-areas p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .progress-section {
+                padding: 18px 20px;
+            }
+
+            .question-card {
+                padding: 30px 20px;
+            }
+
+            .question-text {
+                font-size: 1.15rem;
+            }
+
+            .rating-scale {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 6px;
+            }
+
+            .rating-scale label {
+                min-height: 40px;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+
+            .scale-labels {
+                font-size: 0.75rem;
+            }
+
+            .scale-labels span {
+                max-width: 90px;
+            }
+
+            .navigation-buttons {
+                gap: 12px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+            }
+
+            .total-score {
+                font-size: 3.5rem;
+            }
+
+            .score-level {
+                font-size: 1.3rem;
+            }
+
+            .chart-container {
+                padding: 30px 15px;
+            }
+
+            .detailed-results {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .result-item {
+                padding: 25px 20px;
+            }
+
+            .cta-section {
+                padding: 40px 25px;
+            }
+
+            .cta-section h3 {
+                font-size: 1.6rem;
+            }
+
+            .btn-cta {
+                padding: 16px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rating-scale {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 4px;
+            }
+
+            .rating-scale label {
+                min-height: 36px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .question-text {
+                font-size: 1.05rem;
+            }
+
+            .total-score {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-badge">Móveis Planejados</div>
+            <h1>Diagnóstico <span>Estratégico</span></h1>
+            <p>Avalie os 7 pilares do seu negócio e descubra exatamente onde sua loja precisa evoluir</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-info">
+                <span class="progress-text">Pergunta <strong id="currentQuestion">1</strong> de <strong>38</strong></span>
+                <span class="progress-text"><strong id="progressPercent">3%</strong> concluído</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="quiz-section" id="quizSection">
+            <div class="question-card" id="questionCard">
+                <div class="topic-indicator" id="topicIndicator">Administrativo/Financeiro</div>
+                <div class="question-number" id="questionNumber">Pergunta 1/38</div>
+                <div class="question-text" id="questionText">
+                    Como você avalia sua organização em termos de Margem de lucro líquido mensal?
+                </div>
+
+                <div class="rating-container">
+                    <div class="rating-scale">
+                        <input type="radio" name="currentAnswer" value="0" id="answer0">
+                        <label for="answer0">0</label>
+                        <input type="radio" name="currentAnswer" value="1" id="answer1">
+                        <label for="answer1">1</label>
+                        <input type="radio" name="currentAnswer" value="2" id="answer2">
+                        <label for="answer2">2</label>
+                        <input type="radio" name="currentAnswer" value="3" id="answer3">
+                        <label for="answer3">3</label>
+                        <input type="radio" name="currentAnswer" value="4" id="answer4">
+                        <label for="answer4">4</label>
+                        <input type="radio" name="currentAnswer" value="5" id="answer5">
+                        <label for="answer5">5</label>
+                        <input type="radio" name="currentAnswer" value="6" id="answer6">
+                        <label for="answer6">6</label>
+                        <input type="radio" name="currentAnswer" value="7" id="answer7">
+                        <label for="answer7">7</label>
+                        <input type="radio" name="currentAnswer" value="8" id="answer8">
+                        <label for="answer8">8</label>
+                        <input type="radio" name="currentAnswer" value="9" id="answer9">
+                        <label for="answer9">9</label>
+                        <input type="radio" name="currentAnswer" value="10" id="answer10">
+                        <label for="answer10">10</label>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Nunca feito / Muito ruim</span>
+                        <span>Excelente</span>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="visibility: hidden;">← Anterior</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Próxima →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="results">
+            <div class="results-header">
+                <h2>Seu <span>Diagnóstico</span> Completo</h2>
+                <div class="score-summary">
+                    <div class="total-score" id="totalScore">0%</div>
+                    <div class="score-level" id="scoreLevel">Calculando...</div>
+                    <div class="score-message" id="scoreMessage"></div>
+                    <div class="benchmark-note">
+                        <strong>Referência:</strong> A média aceitável para cada pilar é de <strong>75%</strong> (nota 7,5). Pilares abaixo disso precisam de atenção prioritária.
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-areas" id="problemAreas" style="display: none;">
+                <h4>⚠️ Atenção aos Pilares Críticos</h4>
+                <p id="problemAreasText">Os pilares mais problemáticos em lojas de móveis planejados costumam ser: <strong>Administrativo/Financeiro</strong>, <strong>Marketing</strong> e <strong>Vendas</strong>. Veja abaixo como sua loja se compara.</p>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Visão Geral dos 7 Pilares</h3>
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+
+            <div class="detailed-results" id="detailedResults">
+                <!-- Results populated by JS -->
+            </div>
+
+            <div class="cta-section">
+                <h3>Pronto para <span>Transformar</span> sua Loja?</h3>
+                <p>Seu diagnóstico revelou os gaps mais críticos do seu negócio. Com uma consultoria especializada, você pode estruturar processos, aumentar vendas e escalar sua operação.</p>
+
+                <div class="cta-buttons">
+                    <a href="#consultoria" class="btn-cta">Quero Evoluir Minha Loja</a>
+                    <a href="https://wa.me/5511999999999?text=Fiz%20o%20diagn%C3%B3stico%20da%20minha%20loja%20de%20m%C3%B3veis%20planejados%20e%20quero%20mais%20informa%C3%A7%C3%B5es" class="btn-cta-secondary btn-whatsapp" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Falar com Especialista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const topics = [
+            {
+                name: 'administrativo',
+                label: 'Administrativo / Financeiro',
+                shortLabel: 'Adm/Fin',
+                icon: '📊',
+                questions: [
+                    { text: 'Como você avalia sua organização em termos de Margem de lucro líquido mensal?' },
+                    { text: 'Como você avalia sua organização em termos de fluxo de caixa?' },
+                    { text: 'Como você avalia sua organização em termos de gestão de custos e despesas?' },
+                    { text: 'Como você avalia sua organização em termos de gestão de pessoas?' },
+                    { text: 'Como você avalia sua organização em termos de DRE - Demonstração de Resultado por Exercício?' }
+                ]
+            },
+            {
+                name: 'produto',
+                label: 'Produto',
+                shortLabel: 'Produto',
+                icon: '🪑',
+                questions: [
+                    { text: 'Como você avalia seu produto em termos de Mix de soluções?' },
+                    { text: 'Como você avalia seu produto em termos de qualidade final (para montagem)?' },
+                    { text: 'Como você avalia seu produto em termos de posicionamento perante seu público comprador (preço, marca)?' },
+                    { text: 'Como você avalia seu showroom (qualidade, opções, experiência para o cliente)?' },
+                    { text: 'Como você avalia seu produto em termos de fabricação (parceiro fabricante)?' }
+                ]
+            },
+            {
+                name: 'projeto',
+                label: 'Projeto',
+                shortLabel: 'Projeto',
+                icon: '✏️',
+                questions: [
+                    { text: 'Como você avalia seu projeto em termos de criatividade?' },
+                    { text: 'Como você avalia seu projeto em termos de soluções técnicas para a montagem?' },
+                    { text: 'Como você avalia seu projeto em termos de velocidade de entrega?' },
+                    { text: 'Como você avalia seu projeto em termos de alterações e retrabalhos?' },
+                    { text: 'Como você avalia seu projeto em termos de qualidade de decoração e renderização?' }
+                ]
+            },
+            {
+                name: 'marketing',
+                label: 'Marketing',
+                shortLabel: 'Marketing',
+                icon: '📱',
+                questions: [
+                    { text: 'Como você avalia seu marketing em termos de conteúdos de Instagram/Facebook (feed, stories, reels)?' },
+                    { text: 'Como você avalia seu marketing em termos de conteúdos de Google Meu Negócio?' },
+                    { text: 'Como você avalia seu marketing em termos de captação de leads?' },
+                    { text: 'Como você avalia seu marketing em termos de captação de parceiros?' },
+                    { text: 'Como você avalia seu marketing em termos de fachada (PDV)?' }
+                ]
+            },
+            {
+                name: 'vendas',
+                label: 'Vendas',
+                shortLabel: 'Vendas',
+                icon: '💰',
+                questions: [
+                    { text: 'Como você avalia suas vendas em termos de condução de apresentação de projetos?' },
+                    { text: 'Como você avalia suas vendas em termos de argumentações e quebra de objeções?' },
+                    { text: 'Como você avalia suas vendas em termos de cenário de apresentação de projetos?' },
+                    { text: 'Como você avalia suas vendas em termos de fechamento (efetividade)?' },
+                    { text: 'Como você avalia suas vendas em termos de follow-up e recuperação de vendas?' },
+                    { text: 'Como você avalia suas vendas em termos de equipe preparada comercialmente?' },
+                    { text: 'Como você avalia suas vendas em termos de necessidade de gerente/dono participar das negociações?' }
+                ]
+            },
+            {
+                name: 'posvendas',
+                label: 'Pós-Vendas',
+                shortLabel: 'Pós-Vendas',
+                icon: '🤝',
+                questions: [
+                    { text: 'Como você avalia seu pós-vendas em termos de conferência e liberação técnica?' },
+                    { text: 'Como você avalia seu pós-vendas em termos de condução com cliente?' },
+                    { text: 'Como você avalia seu pós-vendas em termos de resolução de conflitos/problemas técnicos?' },
+                    { text: 'Como você avalia seu pós-vendas em termos de entrega final (checklist)?' },
+                    { text: 'Como você avalia seu pós-vendas em termos de confecção e assinatura de caderno técnico?' }
+                ]
+            },
+            {
+                name: 'montagens',
+                label: 'Montagens',
+                shortLabel: 'Montagens',
+                icon: '🔧',
+                questions: [
+                    { text: 'Como você avalia suas montagens em termos de limpeza final de obra?' },
+                    { text: 'Como você avalia suas montagens em termos de qualidade final (refinamento)?' },
+                    { text: 'Como você avalia suas montagens em termos de preservação da obra e itens existentes?' },
+                    { text: 'Como você avalia suas montagens em termos de conduta e comunicação com clientes finais?' },
+                    { text: 'Como você avalia suas montagens em termos de respeito ao prazo de montagem?' },
+                    { text: 'Como você avalia suas montagens em termos de pontualidade?' }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let answers = {};
+        let radarChart;
+
+        // Flatten all questions
+        const allQuestions = [];
+        topics.forEach(topic => {
+            topic.questions.forEach((question, index) => {
+                allQuestions.push({
+                    topicName: topic.name,
+                    topicLabel: topic.label,
+                    topicIcon: topic.icon,
+                    questionIndex: index,
+                    text: question.text,
+                    id: `${topic.name}_${index}`
+                });
+            });
+        });
+
+        const totalQuestions = allQuestions.length;
+
+        function getTopicFeedback(topicName, percentage) {
+            const feedbacks = {
+                'administrativo': {
+                    excellent: "🏆 Excelente gestão financeira! Seus controles permitem decisões estratégicas precisas. Continue refinando análises e projeções.",
+                    good: "📊 Boa base financeira! Para evoluir, implemente DRE detalhado e análise de margens por tipo de projeto.",
+                    warning: "⚠️ Gestão financeira precisa de atenção. Priorize controle de fluxo de caixa e análise de custos fixos vs variáveis.",
+                    critical: "🚨 Área crítica! Estabeleça controles básicos urgentemente: fluxo de caixa, margens e DRE mensal. Isso é sobrevivência."
+                },
+                'produto': {
+                    excellent: "🏆 Mix de produtos e showroom excepcionais! Continue investindo em experiência e diferenciação.",
+                    good: "🪑 Bom posicionamento de produto! Avalie expandir mix e melhorar experiência do showroom.",
+                    warning: "⚠️ Produto precisa de evolução. Revise parceiros fabricantes e invista no showroom como ferramenta de vendas.",
+                    critical: "🚨 Produto em situação crítica! Reavalie posicionamento, qualidade e experiência do cliente no showroom."
+                },
+                'projeto': {
+                    excellent: "🏆 Projetos de alta qualidade! Sua entrega técnica e criativa é diferencial competitivo.",
+                    good: "✏️ Bons projetos! Foque em reduzir retrabalhos e acelerar entregas mantendo qualidade.",
+                    warning: "⚠️ Projetos precisam de padronização. Crie processos para reduzir alterações e melhorar renderização.",
+                    critical: "🚨 Setor de projetos crítico! Estabeleça padrões de qualidade e processos de aprovação urgentemente."
+                },
+                'marketing': {
+                    excellent: "🏆 Marketing excepcional! Sua presença digital e captação são referência no mercado.",
+                    good: "📱 Bom marketing! Intensifique conteúdo no Instagram e otimize captação de leads qualificados.",
+                    warning: "⚠️ Marketing precisa de estratégia. Invista em presença digital consistente e geração de leads.",
+                    critical: "🚨 Marketing crítico! Sem marketing efetivo, vendas dependem apenas de indicações. Estruture urgentemente."
+                },
+                'vendas': {
+                    excellent: "🏆 Equipe comercial de alta performance! Processos de venda estruturados e efetivos.",
+                    good: "💰 Vendas com boa base! Trabalhe follow-up e reduza dependência do dono nas negociações.",
+                    warning: "⚠️ Vendas precisam de estruturação. Treine equipe em argumentação e crie processo de follow-up.",
+                    critical: "🚨 Vendas em situação crítica! Estruture processo comercial, scripts e treinamento urgentemente."
+                },
+                'posvendas': {
+                    excellent: "🏆 Pós-vendas exemplar! Sua experiência de entrega fideliza e gera indicações.",
+                    good: "🤝 Bom pós-vendas! Padronize checklists de entrega e documentação técnica.",
+                    warning: "⚠️ Pós-vendas precisa de processo. Crie fluxo de conferência e resolução de problemas.",
+                    critical: "🚨 Pós-vendas crítico! Cliente insatisfeito não indica. Estruture processo de entrega urgentemente."
+                },
+                'montagens': {
+                    excellent: "🏆 Montagens impecáveis! Qualidade e pontualidade são seu diferencial.",
+                    good: "🔧 Boas montagens! Foque em pontualidade e comunicação com cliente durante a obra.",
+                    warning: "⚠️ Montagens precisam de atenção. Padronize processos de limpeza e checklist de entrega.",
+                    critical: "🚨 Montagens em situação crítica! Problemas na montagem afetam toda a experiência. Estruture urgentemente."
+                }
+            };
+
+            const feedback = feedbacks[topicName];
+            if (!feedback) return "Continue desenvolvendo este pilar!";
+
+            if (percentage >= 75) return feedback.excellent;
+            if (percentage >= 60) return feedback.good;
+            if (percentage >= 40) return feedback.warning;
+            return feedback.critical;
+        }
+
+        function getStatusClass(percentage) {
+            if (percentage >= 75) return 'excellent';
+            if (percentage >= 60) return 'good';
+            if (percentage >= 40) return 'warning';
+            return 'critical';
+        }
+
+        function getStatusText(percentage) {
+            if (percentage >= 75) return '✓ Acima da média';
+            if (percentage >= 60) return '◐ Próximo da média';
+            if (percentage >= 40) return '⚠ Abaixo da média';
+            return '✗ Crítico';
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+        }
+
+        function displayQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+
+            document.getElementById('topicIndicator').innerHTML = `${question.topicIcon} ${question.topicLabel}`;
+            document.getElementById('questionNumber').textContent = `Pergunta ${currentQuestionIndex + 1}/${totalQuestions}`;
+            document.getElementById('questionText').textContent = question.text;
+
+            // Clear previous selection
+            const radioButtons = document.querySelectorAll('input[name="currentAnswer"]');
+            radioButtons.forEach(radio => radio.checked = false);
+
+            // Restore previous answer if exists
+            if (answers[question.id] !== undefined) {
+                document.getElementById(`answer${answers[question.id]}`).checked = true;
+            }
+
+            updateNavigationButtons();
+            updateProgress();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+
+            const selectedAnswer = document.querySelector('input[name="currentAnswer"]:checked');
+            nextBtn.disabled = !selectedAnswer;
+
+            nextBtn.textContent = currentQuestionIndex === totalQuestions - 1 ? 'Ver Resultado →' : 'Próxima →';
+        }
+
+        function saveCurrentAnswer() {
+            const selectedAnswer = document.querySelector('input[name="currentAnswer"]:checked');
+            if (selectedAnswer) {
+                const question = allQuestions[currentQuestionIndex];
+                answers[question.id] = parseInt(selectedAnswer.value);
+            }
+        }
+
+        function nextQuestion() {
+            saveCurrentAnswer();
+
+            if (currentQuestionIndex < totalQuestions - 1) {
+                currentQuestionIndex++;
+                animateTransition();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                saveCurrentAnswer();
+                currentQuestionIndex--;
+                animateTransition();
+            }
+        }
+
+        function animateTransition() {
+            const card = document.getElementById('questionCard');
+            card.classList.add('fade-out');
+
+            setTimeout(() => {
+                displayQuestion();
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
+
+                setTimeout(() => card.classList.remove('fade-in'), 400);
+            }, 300);
+        }
+
+        function calculateResults() {
+            const topicResults = {};
+            let totalScore = 0;
+            let totalAnswered = 0;
+
+            topics.forEach(topic => {
+                let topicScore = 0;
+                let topicAnswered = 0;
+
+                topic.questions.forEach((_, index) => {
+                    const questionId = `${topic.name}_${index}`;
+                    if (answers[questionId] !== undefined) {
+                        topicScore += answers[questionId];
+                        topicAnswered++;
+                    }
+                });
+
+                const maxPossible = topicAnswered * 10;
+                const percentage = maxPossible > 0 ? (topicScore / maxPossible) * 100 : 0;
+                const average = topicAnswered > 0 ? topicScore / topicAnswered : 0;
+
+                topicResults[topic.name] = {
+                    score: topicScore,
+                    average: average,
+                    percentage: percentage,
+                    label: topic.label,
+                    shortLabel: topic.shortLabel,
+                    icon: topic.icon,
+                    questionsAnswered: topicAnswered
+                };
+
+                totalScore += topicScore;
+                totalAnswered += topicAnswered;
+            });
+
+            const overallMax = totalAnswered * 10;
+            const overallPercentage = overallMax > 0 ? (totalScore / overallMax) * 100 : 0;
+
+            return {
+                individual: topicResults,
+                total: totalScore,
+                percentage: overallPercentage
+            };
+        }
+
+        function getScoreLevel(percentage) {
+            if (percentage >= 75) return {
+                level: 'Gestão Estruturada',
+                message: 'Parabéns! Sua loja já opera com boa estruturação. Continue refinando processos e focando nos pilares com maior potencial de melhoria.'
+            };
+            if (percentage >= 60) return {
+                level: 'Gestão em Desenvolvimento',
+                message: 'Sua loja tem boa base, mas há oportunidades claras de evolução. Foque nos pilares abaixo de 75% para ganhos rápidos.'
+            };
+            if (percentage >= 40) return {
+                level: 'Gestão Inicial',
+                message: 'Existem gaps importantes que estão limitando seus resultados. Priorize os pilares críticos para uma transformação real.'
+            };
+            return {
+                level: 'Gestão Crítica',
+                message: 'Sua loja precisa de atenção urgente em diversos pilares. A boa notícia: há muito potencial de crescimento com a estruturação correta.'
+            };
+        }
+
+        function createRadarChart(results) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+
+            if (radarChart) radarChart.destroy();
+
+            const labels = topics.map(t => t.shortLabel);
+            const dataPoints = topics.map(t => results.individual[t.name].average);
+            const idealPoints = new Array(topics.length).fill(7.5);
+            const maxPoints = new Array(topics.length).fill(10);
+
+            const isMobile = window.innerWidth <= 768;
+
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sua Loja',
+                            data: dataPoints,
+                            borderColor: '#d4a853',
+                            backgroundColor: 'rgba(212, 168, 83, 0.2)',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#d4a853',
+                            pointBorderColor: '#0a1628',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Média Aceitável (75%)',
+                            data: idealPoints,
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.05)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointBackgroundColor: '#22c55e',
+                            pointBorderColor: '#0a1628',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#a0aec0',
+                                font: { size: isMobile ? 11 : 13, family: 'DM Sans', weight: '500' },
+                                padding: 20,
+                                usePointStyle: true
+                            },
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                color: '#6b7a8f',
+                                backdropColor: 'transparent',
+                                font: { size: 10 }
+                            },
+                            grid: { color: 'rgba(212, 168, 83, 0.15)' },
+                            angleLines: { color: 'rgba(212, 168, 83, 0.15)' },
+                            pointLabels: {
+                                color: '#f5f5f5',
+                                font: { size: isMobile ? 10 : 12, family: 'DM Sans', weight: '600' },
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displayDetailedResults(results) {
+            const container = document.getElementById('detailedResults');
+            container.innerHTML = '';
+
+            // Sort by percentage (worst first)
+            const sortedTopics = [...topics].sort((a, b) => 
+                results.individual[a.name].percentage - results.individual[b.name].percentage
+            );
+
+            sortedTopics.forEach(topic => {
+                const result = results.individual[topic.name];
+                const statusClass = getStatusClass(result.percentage);
+                const statusText = getStatusText(result.percentage);
+                const feedback = getTopicFeedback(topic.name, result.percentage);
+
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-title">${topic.icon} ${topic.label}</div>
+                        <div class="result-score">${result.average.toFixed(1)} <small>/ 10</small></div>
+                    </div>
+                    <div class="result-bar">
+                        <div class="result-fill" style="width: 0%;"></div>
+                    </div>
+                    <div class="result-status ${statusClass}">${statusText} (${result.percentage.toFixed(0)}%)</div>
+                    <div class="result-feedback">${feedback}</div>
+                `;
+                container.appendChild(resultItem);
+
+                // Animate bar
+                setTimeout(() => {
+                    resultItem.querySelector('.result-fill').style.width = `${result.percentage}%`;
+                }, 100);
+            });
+
+            // Check problem areas
+            const problemPilars = ['administrativo', 'marketing', 'vendas'];
+            const hasProblemAreas = problemPilars.some(p => results.individual[p].percentage < 75);
+            
+            if (hasProblemAreas) {
+                document.getElementById('problemAreas').style.display = 'block';
+            }
+        }
+
+        function showResults() {
+            const results = calculateResults();
+            const scoreInfo = getScoreLevel(results.percentage);
+
+            document.getElementById('totalScore').textContent = `${results.percentage.toFixed(0)}%`;
+            document.getElementById('scoreLevel').textContent = scoreInfo.level;
+            document.getElementById('scoreMessage').textContent = scoreInfo.message;
+
+            createRadarChart(results);
+            displayDetailedResults(results);
+
+            document.getElementById('quizSection').style.display = 'none';
+            document.querySelector('.progress-section').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Event listeners
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'currentAnswer') {
+                updateNavigationButtons();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '0' && e.key <= '9') {
+                const num = parseInt(e.key);
+                document.getElementById(`answer${num}`).checked = true;
+                updateNavigationButtons();
+            } else if (e.key === 'Enter' && !document.getElementById('nextBtn').disabled) {
+                nextQuestion();
+            } else if (e.key === 'ArrowRight' && !document.getElementById('nextBtn').disabled) {
+                nextQuestion();
+            } else if (e.key === 'ArrowLeft' && currentQuestionIndex > 0) {
+                previousQuestion();
+            }
+        });
+
+        // Initialize
+        displayQuestion();
+    </script>
+</body>
+</html>

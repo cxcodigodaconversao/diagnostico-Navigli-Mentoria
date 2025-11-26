@@ -1,0 +1,31 @@
+{
+  "name": "diagnostico-moveis-planejados",
+  "version": "1.0.0",
+  "description": "Diagnóstico Estratégico para Lojas de Móveis Planejados - Avalie os 7 pilares do seu negócio",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Abra o index.html no navegador'",
+    "build": "echo 'Build complete - projeto estático'",
+    "deploy": "echo 'Deploy via Netlify'"
+  },
+  "keywords": [
+    "móveis planejados",
+    "diagnóstico",
+    "gestão",
+    "vendas",
+    "marketing",
+    "loja",
+    "quiz",
+    "avaliação"
+  ],
+  "author": "Consultoria Móveis Planejados",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SEU_USUARIO/diagnostico-moveis-planejados.git"
+  },
+  "homepage": "https://seu-site.netlify.app",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
